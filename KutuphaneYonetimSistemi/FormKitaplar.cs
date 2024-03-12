@@ -316,7 +316,7 @@ namespace KutuphaneYonetimSistemi
         private int sayiyaDonustur(string romaRakam)
         {
             int  sayi = 0;
-
+             
             foreach(char rakam in romaRakam)
             {
                 if (rakam == 'I')
