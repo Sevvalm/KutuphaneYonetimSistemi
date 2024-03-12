@@ -68,6 +68,7 @@
             textBoxromaRakam = new TextBox();
             buttonsayiyaCevir = new Button();
             labelsayiyiGoster = new Label();
+            button3 = new Button();
             groupBox1.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
@@ -450,14 +451,14 @@
             // 
             // textBoxromaRakam
             // 
-            textBoxromaRakam.Location = new Point(121, 232);
+            textBoxromaRakam.Location = new Point(6, 231);
             textBoxromaRakam.Name = "textBoxromaRakam";
             textBoxromaRakam.Size = new Size(100, 23);
             textBoxromaRakam.TabIndex = 7;
             // 
             // buttonsayiyaCevir
             // 
-            buttonsayiyaCevir.Location = new Point(236, 232);
+            buttonsayiyaCevir.Location = new Point(121, 231);
             buttonsayiyaCevir.Name = "buttonsayiyaCevir";
             buttonsayiyaCevir.Size = new Size(75, 23);
             buttonsayiyaCevir.TabIndex = 8;
@@ -468,17 +469,28 @@
             // labelsayiyiGoster
             // 
             labelsayiyiGoster.AutoSize = true;
-            labelsayiyiGoster.Location = new Point(327, 240);
+            labelsayiyiGoster.Location = new Point(212, 239);
             labelsayiyiGoster.Name = "labelsayiyiGoster";
             labelsayiyiGoster.Size = new Size(16, 15);
             labelsayiyiGoster.TabIndex = 9;
             labelsayiyiGoster.Text = "...";
+            // 
+            // button3
+            // 
+            button3.Location = new Point(457, 231);
+            button3.Name = "button3";
+            button3.Size = new Size(102, 44);
+            button3.TabIndex = 10;
+            button3.Text = "Ödünç Alınmamış Kitap";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // FormKitaplar
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(953, 426);
+            Controls.Add(button3);
             Controls.Add(labelsayiyiGoster);
             Controls.Add(buttonsayiyaCevir);
             Controls.Add(textBoxromaRakam);
@@ -546,5 +558,6 @@
         private TextBox textBoxromaRakam;
         private Button buttonsayiyaCevir;
         private Label labelsayiyiGoster;
+        private Button button3;
     }
 }

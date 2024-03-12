@@ -33,7 +33,7 @@ namespace KutuphaneYonetimSistemi
                 sqlCommand.Parameters.AddWithValue("@P2", textBoxYazarAdi.Text);
                 sqlCommand.Parameters.AddWithValue("@P3", textBoxYazarSoyad.Text);
                 sqlCommand.Parameters.AddWithValue("@P4", textBoxISBN.Text);
-                sqlCommand.Parameters.AddWithValue("@P5", "False");
+                sqlCommand.Parameters.AddWithValue("@P5", false);
                 sqlCommand.Parameters.AddWithValue("@P6", textBoxKitapTurKodu.Text);
 
                 sqlCommand.ExecuteNonQuery();
@@ -135,7 +135,7 @@ namespace KutuphaneYonetimSistemi
                     SqlCommand sqlCommand = new SqlCommand("UPDATE TableKitaplar SET OduncAlan= @P1, OduncAlmaTarihi= @P2, Durum= @P3 WHERE ID=@P4 ", baglanti);
                     sqlCommand.Parameters.AddWithValue("@P1", textBoxOduncAlan.Text);
                     sqlCommand.Parameters.AddWithValue("@P2", SqlDbType.Date).Value = dateTimePicker1.Value.Date;
-                    sqlCommand.Parameters.AddWithValue("@P3", "True");
+                    sqlCommand.Parameters.AddWithValue("@P3", true);
                     sqlCommand.Parameters.AddWithValue("@P4", labelID.Text);
 
                     sqlCommand.ExecuteNonQuery();
@@ -202,7 +202,7 @@ namespace KutuphaneYonetimSistemi
                     {
                         DateTime bugununtarihi = DateTime.Now;
                         gunFarki = (int)(bugununtarihi - dateTimePicker1.Value.Date).TotalDays;
-                        gecikmeBedeli = Math.Max(0,(gunFarki - 10) * secilenfiyat);
+                        gecikmeBedeli = Math.Max(0, (gunFarki - 10) * secilenfiyat);
 
                     }
                     labelGecikmeBedeli.Text = gecikmeBedeli.ToString();
@@ -256,8 +256,9 @@ namespace KutuphaneYonetimSistemi
                                                 "AND YazarAdi LIKE '%" + textBoxYazarAdi.Text + "%' " +
                                                 "AND YazarSoyadi LIKE '%" + textBoxYazarSoyad.Text + "%' " +
                                                 "AND ISBN LIKE '%" + textBoxISBN.Text + "%' " +
-                                                "AND KitapTurKodu LIKE '%" + textBoxKitapTurKodu.Text + "%' " +
-                                                "AND OduncAlan LIKE '%" + textBoxOduncAlan.Text + "%'";
+                                                "AND KitapTurKodu LIKE '%" + textBoxKitapTurKodu.Text + "%' ";
+                if (textBoxOduncAlan.Text != string.Empty)
+                    q += "AND OduncAlan LIKE '%" + textBoxOduncAlan.Text + "%'";
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(q, baglanti);
                 DataTable dt = new DataTable();
@@ -315,9 +316,10 @@ namespace KutuphaneYonetimSistemi
 
         private int sayiyaDonustur(string romaRakam)
         {
-            int  sayi = 0;
-             
-            foreach(char rakam in romaRakam)
+            /* int sayi = 0;
+            int sonsayi = 0;
+
+            foreach (char rakam in romaRakam)
             {
                 if (rakam == 'I')
                     sayi += 1;
@@ -338,15 +340,93 @@ namespace KutuphaneYonetimSistemi
 
             }
             return sayi;
+
+
+            if (romaRakam[0] < romaRakam[romaRakam.Length - 1])
+            {
+                sonsayi = sayi - 1;
+            }
+            return sonsayi;
+            */
+            int sonsayi = 0;
+            int sayi1 = 0;
+
+            for (int i = romaRakam.Length - 1; i >= 0; i--)
+            {
+                int sayi2 = 0;
+                switch (romaRakam[i])
+                {
+                    case 'I':
+                        sayi2 += 1;
+                        break;
+                    case 'V':
+                        sayi2 += 5;
+                        break;
+                    case 'X':
+                        sayi2 += 10;
+                        break;
+                    case 'L':
+                        sayi2 += 50;
+                        break;
+                    case 'C':
+                        sayi2 += 100;
+                        break;
+                    case 'D':
+                        sayi2 += 500;
+                        break;
+                    case 'M':
+                        sayi2 += 1000;
+                        break;
+                    default:
+                        return -1;
+
+                }
+                if (sayi2 < sayi1)
+                {
+                    sonsayi -= sayi2;
+                }
+                else
+                {
+                    sonsayi += sayi2;
+                }
+                sayi1 = sayi2;
+
+            }
+            return sonsayi;
         }
 
         private void buttonsayiyaCevir_Click(object sender, EventArgs e)
         {
             string romaRakam = textBoxromaRakam.Text.ToUpper();
-            int sayi = sayiyaDonustur(romaRakam);
-            labelsayiyiGoster.Text = sayi.ToString();
+            int sonsayi = sayiyaDonustur(romaRakam);
+            labelsayiyiGoster.Text = sonsayi.ToString();
 
         }
-  
+
+
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                baglanti.Open();
+                SqlCommand sqlcommand = new SqlCommand("SELECT kitapAdi,yazarAdi,yazarSoyadi,ISBN,kitapTurKodu FROM tableKitaplar WHERE Durum=0",baglanti);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlcommand);
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+
+                dataGridViewKitaplar.DataSource = dt;
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                baglanti.Close();
+            }
+        }
     }
 }
