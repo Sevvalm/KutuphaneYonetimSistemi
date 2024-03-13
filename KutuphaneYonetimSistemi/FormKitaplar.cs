@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace KutuphaneYonetimSistemi
 {
@@ -20,8 +10,6 @@ namespace KutuphaneYonetimSistemi
         {
             InitializeComponent();
         }
-
-
 
         private void buttonYeniKitapEkle_Click(object sender, EventArgs e)
         {
@@ -410,7 +398,7 @@ namespace KutuphaneYonetimSistemi
             try
             {
                 baglanti.Open();
-                SqlCommand sqlcommand = new SqlCommand("SELECT kitapAdi,yazarAdi,yazarSoyadi,ISBN,kitapTurKodu FROM tableKitaplar WHERE Durum=0",baglanti);
+                SqlCommand sqlcommand = new SqlCommand("SELECT kitapAdi,yazarAdi,yazarSoyadi,ISBN,kitapTurKodu FROM tableKitaplar WHERE Durum=0", baglanti);
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlcommand);
                 DataTable dt = new DataTable();
@@ -419,7 +407,7 @@ namespace KutuphaneYonetimSistemi
                 dataGridViewKitaplar.DataSource = dt;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -427,6 +415,52 @@ namespace KutuphaneYonetimSistemi
             {
                 baglanti.Close();
             }
+        }
+
+        private void iletisimGoster()
+        {
+            try
+            {
+                string q = "SELECT KullaniciAdi,iletisim FROM TableKutuphaneYoneticileri ky join TableiletisimKutuphaneYonetici oi on ky.ID=oi.ID ";
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(q, baglanti);
+                DataTable dt = new DataTable();
+                dataAdapter.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    dataGridViewKitaplar.DataSource = dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            iletisimGoster();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                baglanti.Open();
+                SqlCommand sqlCommand = new SqlCommand("INSERT INTO TableiletisimKutuphaneYonetici (iletisim, UserId) VALUES (@P1, @P2 )", baglanti);
+                sqlCommand.Parameters.AddWithValue("@P1", textBoxIletisim.Text);
+                sqlCommand.Parameters.AddWithValue("@P2", textBoxyoneticiID.Text);
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("İletişim bilgisi eklenirken bir sorun oluştu", ex.Message);
+            }
+            finally 
+            {
+                baglanti.Close(); 
+            }
+
         }
     }
 }

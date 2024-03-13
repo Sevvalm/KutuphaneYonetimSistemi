@@ -34,15 +34,17 @@ namespace KutuphaneYonetimSistemi
                 try
                 {
                     baglanti.Open();
-                    SqlCommand checkCommand = new SqlCommand("SELECT COUNT(*) FROM TableKutuphaneYoneticileri WHERE kullaniciAdi=@P1 AND Sifre=@P2", baglanti);
+                    SqlCommand checkCommand = new SqlCommand("SELECT COUNT(*) FROM TableKutuphaneYoneticileri WHERE kullaniciAdi=@P1, Sifre=@P2, ID=@P3", baglanti);
                     checkCommand.Parameters.AddWithValue("@P1", textBoxsilKullaniciAdi.Text);
                     checkCommand.Parameters.AddWithValue("@P2", textBoxsilSifre.Text);
+                    checkCommand.Parameters.AddWithValue("@P3", textBoxsilID.Text);
 
                     int count = (int)checkCommand.ExecuteScalar();
 
                     if (count > 0)
                     {
-                        SqlCommand sqlCommand = new SqlCommand("DELETE FROM TableKutuphaneYoneticileri WHERE kullaniciAdi=@P1 AND Sifre=@P2", baglanti);
+                        SqlCommand sqlCommand = new SqlCommand("DELETE FROM TableKutuphaneYoneticileri ky join TableiletisimKutuphaneYonetici ik on ky.ID=ik.ID WHERE ID=@P1", baglanti);
+
                         sqlCommand.Parameters.AddWithValue("@P1", textBoxsilKullaniciAdi.Text);
                         sqlCommand.Parameters.AddWithValue("@P2", textBoxsilSifre.Text);
 

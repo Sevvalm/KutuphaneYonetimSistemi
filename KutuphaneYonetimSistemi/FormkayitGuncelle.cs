@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,37 +19,53 @@ namespace KutuphaneYonetimSistemi
         {
             InitializeComponent();
         }
+
         SqlConnection baglanti = new SqlConnection("Server=LAPTOP-1UFMMF5R;Database=DbKutuphane;Trusted_Connection=True;TrustServerCertificate=True;");
         Form1 formGiris;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string sifre = "";
+            string sifre="";
             try
             {
                 baglanti.Open();
                 SqlCommand sqlCommand = new SqlCommand("SELECT top(1) sifre FROM TableKutuphaneYoneticileri WHERE KullaniciAdi = @p1", baglanti);
                 sqlCommand.Parameters.AddWithValue("@p1", textBoxyKullaniciAdi.Text);
                 SqlDataReader reader = sqlCommand.ExecuteReader();
+
                 while (reader.Read())
                 {
                     sifre = reader[0].ToString();
                 }
                 baglanti.Close();
+                
 
                 if (sifre == textBoxySifre.Text)
                 {
                     label3.Text = "Yeni şifre eski şifre ile aynı olamaz!";
                     //todo: regex ile kontrol yapılacak
                 }
-                else
-                {
-                    baglanti.Open();
-                    SqlCommand sqlCommand2 = new SqlCommand("UPDATE TableKutuphaneYoneticileri SET sifre=@P1 WHERE kullaniciAdi=@P2", baglanti);
-                    sqlCommand2.Parameters.AddWithValue("@P2", textBoxyKullaniciAdi.Text);
-                    sqlCommand2.Parameters.AddWithValue("@P1", textBoxySifre.Text);
 
-                    sqlCommand2.ExecuteNonQuery();
+                else
+                { 
+                   //Sasa1234!
+
+                    if (Regex.IsMatch(textBoxySifre.Text, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"))
+                    {
+                        baglanti.Open();
+                        SqlCommand sqlCommand2 = new SqlCommand("UPDATE TableKutuphaneYoneticileri SET sifre=@P1 WHERE kullaniciAdi=@P2", baglanti);
+                        sqlCommand2.Parameters.AddWithValue("@P2", textBoxyKullaniciAdi.Text);
+                        sqlCommand2.Parameters.AddWithValue("@P1", textBoxySifre.Text);
+
+                        sqlCommand2.ExecuteNonQuery();
+                        label3.Text = " Şifre güncellendi";
+    
+                    }
+                    else
+                    {
+                        MessageBox.Show("Şifre, en az bir büyük harf, bir küçük harf ve bir rakam içermelidir. Minimum uzunluk 8 karakter olmalıdır.");
+                    }
+                    
                 }
             }
             catch (Exception ex)

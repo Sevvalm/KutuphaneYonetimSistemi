@@ -32,6 +32,7 @@
             textBoxKitapAdi = new TextBox();
             label1 = new Label();
             groupBox1 = new GroupBox();
+            button3 = new Button();
             groupBox6 = new GroupBox();
             buttonKayitSil = new Button();
             buttonYeniKitapEkle = new Button();
@@ -49,6 +50,10 @@
             textBoxISBN = new TextBox();
             textBoxYazarSoyad = new TextBox();
             textBoxYazarAdi = new TextBox();
+            button6 = new Button();
+            button5 = new Button();
+            textBoxIletisim = new TextBox();
+            label9 = new Label();
             groupBox2 = new GroupBox();
             buttonKitapOduncVer = new Button();
             dateTimePicker1 = new DateTimePicker();
@@ -68,7 +73,8 @@
             textBoxromaRakam = new TextBox();
             buttonsayiyaCevir = new Button();
             labelsayiyiGoster = new Label();
-            button3 = new Button();
+            label10 = new Label();
+            textBoxyoneticiID = new TextBox();
             groupBox1.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
@@ -107,6 +113,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(button3);
             groupBox1.Controls.Add(groupBox6);
             groupBox1.Controls.Add(groupBox5);
             groupBox1.Controls.Add(labelID);
@@ -121,12 +128,22 @@
             groupBox1.Controls.Add(textBoxYazarSoyad);
             groupBox1.Controls.Add(textBoxYazarAdi);
             groupBox1.Controls.Add(textBoxKitapAdi);
-            groupBox1.Location = new Point(12, 9);
+            groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(589, 196);
+            groupBox1.Size = new Size(589, 231);
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "KitapKayıt ve Güncelleme";
+            // 
+            // button3
+            // 
+            button3.Location = new Point(421, 185);
+            button3.Name = "button3";
+            button3.Size = new Size(98, 41);
+            button3.TabIndex = 10;
+            button3.Text = "Ödünç Alınmamış Kitap";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // groupBox6
             // 
@@ -167,7 +184,7 @@
             groupBox5.Controls.Add(button4);
             groupBox5.Controls.Add(buttonara);
             groupBox5.Controls.Add(button2);
-            groupBox5.Location = new Point(258, 22);
+            groupBox5.Location = new Point(283, 22);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new Size(292, 74);
             groupBox5.TabIndex = 17;
@@ -288,6 +305,42 @@
             textBoxYazarAdi.Size = new Size(123, 23);
             textBoxYazarAdi.TabIndex = 2;
             // 
+            // button6
+            // 
+            button6.Location = new Point(482, 290);
+            button6.Name = "button6";
+            button6.Size = new Size(78, 28);
+            button6.TabIndex = 21;
+            button6.Text = "İletişim Ekle";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
+            // button5
+            // 
+            button5.Location = new Point(18, 263);
+            button5.Name = "button5";
+            button5.Size = new Size(175, 28);
+            button5.TabIndex = 11;
+            button5.Text = "Kütüphane Yöneticileri İletişim";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // textBoxIletisim
+            // 
+            textBoxIletisim.Location = new Point(353, 290);
+            textBoxIletisim.Name = "textBoxIletisim";
+            textBoxIletisim.Size = new Size(123, 23);
+            textBoxIletisim.TabIndex = 20;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(227, 298);
+            label9.Name = "label9";
+            label9.Size = new Size(120, 15);
+            label9.TabIndex = 19;
+            label9.Text = "Yönetici İletişim Ekle :";
+            // 
             // groupBox2
             // 
             groupBox2.Controls.Add(buttonKitapOduncVer);
@@ -295,7 +348,7 @@
             groupBox2.Controls.Add(textBoxOduncAlan);
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(label2);
-            groupBox2.Location = new Point(620, 12);
+            groupBox2.Location = new Point(643, 12);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(231, 130);
             groupBox2.TabIndex = 4;
@@ -365,7 +418,7 @@
             groupBox3.Controls.Add(label8);
             groupBox3.Controls.Add(labelGecikmeBedeli);
             groupBox3.Controls.Add(label4);
-            groupBox3.Location = new Point(620, 145);
+            groupBox3.Location = new Point(643, 146);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(270, 130);
             groupBox3.TabIndex = 5;
@@ -431,9 +484,9 @@
             // groupBox4
             // 
             groupBox4.Controls.Add(dataGridViewKitaplar);
-            groupBox4.Location = new Point(2, 271);
+            groupBox4.Location = new Point(-5, 311);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(951, 154);
+            groupBox4.Size = new Size(962, 158);
             groupBox4.TabIndex = 6;
             groupBox4.TabStop = false;
             groupBox4.Text = "Kitap Listesi";
@@ -445,20 +498,20 @@
             dataGridViewKitaplar.Dock = DockStyle.Fill;
             dataGridViewKitaplar.Location = new Point(3, 19);
             dataGridViewKitaplar.Name = "dataGridViewKitaplar";
-            dataGridViewKitaplar.Size = new Size(945, 132);
+            dataGridViewKitaplar.Size = new Size(956, 136);
             dataGridViewKitaplar.TabIndex = 0;
             dataGridViewKitaplar.CellClick += dataGridViewKitaplar_CellClick;
             // 
             // textBoxromaRakam
             // 
-            textBoxromaRakam.Location = new Point(6, 231);
+            textBoxromaRakam.Location = new Point(643, 282);
             textBoxromaRakam.Name = "textBoxromaRakam";
-            textBoxromaRakam.Size = new Size(100, 23);
+            textBoxromaRakam.Size = new Size(54, 23);
             textBoxromaRakam.TabIndex = 7;
             // 
             // buttonsayiyaCevir
             // 
-            buttonsayiyaCevir.Location = new Point(121, 231);
+            buttonsayiyaCevir.Location = new Point(699, 282);
             buttonsayiyaCevir.Name = "buttonsayiyaCevir";
             buttonsayiyaCevir.Size = new Size(75, 23);
             buttonsayiyaCevir.TabIndex = 8;
@@ -469,31 +522,42 @@
             // labelsayiyiGoster
             // 
             labelsayiyiGoster.AutoSize = true;
-            labelsayiyiGoster.Location = new Point(212, 239);
+            labelsayiyiGoster.Location = new Point(780, 290);
             labelsayiyiGoster.Name = "labelsayiyiGoster";
             labelsayiyiGoster.Size = new Size(16, 15);
             labelsayiyiGoster.TabIndex = 9;
             labelsayiyiGoster.Text = "...";
             // 
-            // button3
+            // label10
             // 
-            button3.Location = new Point(457, 231);
-            button3.Name = "button3";
-            button3.Size = new Size(102, 44);
-            button3.TabIndex = 10;
-            button3.Text = "Ödünç Alınmamış Kitap";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            label10.AutoSize = true;
+            label10.Location = new Point(227, 264);
+            label10.Name = "label10";
+            label10.Size = new Size(69, 15);
+            label10.TabIndex = 22;
+            label10.Text = "Yönetici ID :";
+            // 
+            // textBoxyoneticiID
+            // 
+            textBoxyoneticiID.Location = new Point(353, 261);
+            textBoxyoneticiID.Name = "textBoxyoneticiID";
+            textBoxyoneticiID.Size = new Size(78, 23);
+            textBoxyoneticiID.TabIndex = 23;
             // 
             // FormKitaplar
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(953, 426);
-            Controls.Add(button3);
+            ClientSize = new Size(958, 469);
+            Controls.Add(label10);
+            Controls.Add(textBoxyoneticiID);
+            Controls.Add(button6);
+            Controls.Add(button5);
             Controls.Add(labelsayiyiGoster);
+            Controls.Add(label9);
             Controls.Add(buttonsayiyaCevir);
             Controls.Add(textBoxromaRakam);
+            Controls.Add(textBoxIletisim);
             Controls.Add(groupBox4);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
@@ -559,5 +623,11 @@
         private Button buttonsayiyaCevir;
         private Label labelsayiyiGoster;
         private Button button3;
+        private Button button5;
+        private TextBox textBoxIletisim;
+        private Label label9;
+        private Button button6;
+        private Label label10;
+        private TextBox textBoxyoneticiID;
     }
 }

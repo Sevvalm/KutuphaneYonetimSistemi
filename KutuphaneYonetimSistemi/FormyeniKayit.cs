@@ -5,7 +5,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -23,23 +25,32 @@ namespace KutuphaneYonetimSistemi
         Form1 formGiris;
         private void button1_Click(object sender, EventArgs e)
         {
-
             try
             {
-                baglanti.Open();
-                SqlCommand sqlCommand = new SqlCommand("INSERT INTO TableKutuphaneYoneticileri (kullaniciAdi,sifre) VALUES (@P1,@P2)", baglanti);
-                sqlCommand.Parameters.AddWithValue("@P1", textBoxyeniKullanici.Text);
-                sqlCommand.Parameters.AddWithValue("@P2", textBoxyeniSifre.Text);
+                string sifre = textBoxyeniSifre.Text;
 
-                sqlCommand.ExecuteNonQuery();
 
-                label3.Text = "kullanıcı eklendi!";
+                if (Regex.IsMatch(sifre, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"))
+                {
+                    baglanti.Open();
+                    SqlCommand sqlCommand = new SqlCommand("INSERT INTO TableKutuphaneYoneticileri (kullaniciAdi,sifre) VALUES (@P1,@P2)", baglanti);
+                    sqlCommand.Parameters.AddWithValue("@P1", textBoxyeniKullanici.Text);
+                    sqlCommand.Parameters.AddWithValue("@P2", textBoxyeniSifre.Text);
 
+                    sqlCommand.ExecuteNonQuery();
+
+                    label3.Text = "kullanıcı eklendi!";
+                }
+                else
+                {
+                    MessageBox.Show("Şifre, en az bir büyük harf, bir küçük harf ve bir rakam içermelidir. Minimum uzunluk 8 karakter olmalıdır.");
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Kayıt işlemi sırasında bir sorun oluştu!", ex.Message);
             }
+
             finally
             {
                 baglanti.Close();

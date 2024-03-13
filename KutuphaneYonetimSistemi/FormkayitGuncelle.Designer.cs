@@ -58,9 +58,9 @@
             label2.Font = new Font("Cambria", 12F);
             label2.Location = new Point(12, 62);
             label2.Name = "label2";
-            label2.Size = new Size(45, 19);
+            label2.Size = new Size(78, 19);
             label2.TabIndex = 6;
-            label2.Text = "Şifre:";
+            label2.Text = "Yeni Şifre:";
             // 
             // label1
             // 

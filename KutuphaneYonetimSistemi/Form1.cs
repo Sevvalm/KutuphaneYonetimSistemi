@@ -23,7 +23,7 @@ namespace KutuphaneYonetimSistemi
         {
             FormKitaplar formkitaplar;
 
-            string sifre = "";
+            string sifree = "";
             try
             {
                 baglanti.Open();
@@ -33,10 +33,10 @@ namespace KutuphaneYonetimSistemi
 
                 while (reader.Read())
                 {
-                    sifre = reader[0].ToString();
+                    sifree = reader[0].ToString();
                 }
 
-                if (sifre == textBoxSifre.Text)
+                if (sifree == textBoxSifre.Text)
                 {
                     label3.Text = "Þifre Doðru!";
                     formkitaplar = new FormKitaplar();
